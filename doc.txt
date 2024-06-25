@@ -1,0 +1,92 @@
+Public{
+    Location: 'MeuVeterano/public',
+    Files: ['error', 'faq', 'home', 'index', 'search', 'viewContent'],
+    Description: "Pages for the target users. They can acces the main page, home where
+        they can see the most recent added content and go to the search page where
+        they are able to search for content."
+}
+
+Administraton{
+    Location: 'MeuVeterano/adm/',
+    Files: ['index', 'menage', 'upload'],
+    Description: "Pages that only administratiors have acces with an accout."
+}
+
+Templates{
+    Location: 'MeuVeterano',
+    Files: ['header', 'searcForm'],
+    Description: "Parts of php/html that are used in more than one page and
+    there is no need to make`em different."
+}
+
+Global{
+    Location: 'MeuVeterano/',
+    Files:['connect_db', 'delete_content', 'error_handling', 'global_functions',
+        'index', 'search_content', 'upload_content'],
+    Description: "The main files that act in the backend connecting to one or many of
+        the public and/or administraton pages."
+}
+
+Folder Structure: folder/subject/type/year/semester/file.extension
+
+Database Tables Structure:
+contents(
+
+    file_id VARCHAR(32) PRIMARY KEY,
+    file_path VARCHAR(255) UNIQUE,
+    subject VARCHAR(128) NOT NULL,
+    professor_name VARCHAR(64),
+    content_type VARCHAR(10)NOT NULL,
+    extension VARCHAR(4) NOT NULL,
+    file_year YEAR,
+    semester VARCHAR(1),
+    content_date DATETIME
+    
+);
+
+answer_keys(
+    answer_key_id varchar(32) PRIMARY KEY,
+    answer_key_path VARCHAR(255),
+    related_content VARCHAR(32),
+    FOREIGN KEY (related_content) REFERENCES contents(file_id)
+);
+
+admins(
+    user VARCHAR(32) UNIQUE NOT NULL,
+    name VARCHAR(64) NOT NULL,
+    user_key VARCHAR(64) NOT NULL
+);
+--------------------------------------------------------------------------------------------------
+
+Public.Files['index'] =>
+    "The public/index.php `s work is to include the page corresponding to the given url;
+    It uses a get method to get the ?page from the URL, stores in a variable, then checks
+    if exits in the current folder, if so then is continues the execution goes normaly, a 
+    session is started and the include load the requested $page.
+    If it is not in the folder then a http 404 header is returned and the execution ends."
+
+Public.Files['home'] =>
+    Starts including the necessary files like the global functions and connection to database.
+    After that makes a query to select the 12 most recent added content. Then renders the html 
+    and draw the cards with the results from the database;
+
+---------------------------------------------------------------------------------------------------
+Global.Files['index'] =>
+    "Aparently the xampp server is configured to redirect to index.php files; so if
+    some user tries to acces the URL MeuVeterano/ the php header function will redirect
+    to the Public.Files['index']"
+
+Global.Files['global_functions'] =>
+    "The files delete_content, upload_content and search_content has in the begginign of the 
+    code a function that handles status of their operation. These status functions may close
+    connections and stetements, then assing a message to a status session and exit the code
+    after send a header redirecting to the previous page. 
+    In the end of the html body of these previous pages, like search, upload and menage, is a
+    php that 'echoes' a js script that show the status of the operation. These scripts are all
+    made by the funtion handle_status_sections($jsFunction, $sessionName);
+    The jsFunction can be alert or a console.log.
+    The sessionName variable is the name of the session associated with the current page.
+
+    upload.php -> sessionNames = [data_validation_status]
+    menage.php -> sessionName = ['deletion_status', 'edit_status']"
+    

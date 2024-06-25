@@ -1,0 +1,37 @@
+MeuVeterano I.A. treinada com a base de conteúdos da propria plataforma
+Modelo: professor inputam provas e listas e IA treianm com base nisso e geram conteúdo de estudo
+
+1----------------------------------------------------------------------------------------------------------
+Publicar - fazer uma página de boas vindas
+depois coloca um campo de busca que faz o item 3
+
+2----------------------------------------------------------------------------------------------------------
+Create an upload ubject, the private methods are the functions that receive the data from the user
+they check everything
+the public method is the one that receive the informations, including if it's and upload from the 
+the staff or from a user. Depending on the arguments it creates and upload for different folder
+with different metadata.
+
+flow idea:
+when the page loaded it creates a new instande of Class upload();
+it parses the data from the input fields;
+the upload data is given to a constructor that builds the upload;
+it set or not a value with any error that can occour during the building;
+then we check if some error occur it`s appened to an erro string;
+the upload can now start, one by one except the ones with error;
+the oned with errors are stored in a different lsit fot further use;
+the uploads are stored and the upload is started externaly, it uploads one by one
+so if one upload goes wrong it is store outside of the queue and the other upload can keep going on
+
+seems like a good idea do just throw the files in a folder separed in folder such as INFI, INMA an so on;
+3----------------------------------------------------------------------------------------------------------
+For the search, it's possible to create a simple mechanism to allow search from only one input
+It has to spread the words, discard work like "de", "e", "por", etc then search for each one in the database
+After that it shows the results that matches the keywords and if a result that doesn't mach all of the worlds
+it can show results each word.
+
+4----------------------------------------------------------------------------------------------------------
+Need to send unformated edition data; validate before sending to db and change it`s folder using the filePath;
+Implement multiple deletion;
+Use JS to validade data in the front end before sendint data to the backend;
+Leran how to use Ajax for dynamicaly load pages using requests;
