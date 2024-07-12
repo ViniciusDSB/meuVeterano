@@ -1,34 +1,12 @@
-Public{
-    Location: 'MeuVeterano/public',
-    Files: ['error', 'faq', 'home', 'index', 'search', 'viewContent'],
-    Description: "Pages for the target users. They can acces the main page, home where
-        they can see the most recent added content and go to the search page where
-        they are able to search for content."
-}
+To use run the project you just have to download the clone this repository
+Download, install xampp, by defalt the database set is{
+    $host = "localhost";
+    $user = "root";
+    $password = "";
+    $database = "database_name";
+} wich you can change in the connect_db.php, to connect to your database
 
-Administraton{
-    Location: 'MeuVeterano/adm/',
-    Files: ['index', 'menage', 'upload'],
-    Description: "Pages that only administratiors have acces with an accout."
-}
-
-Templates{
-    Location: 'MeuVeterano',
-    Files: ['header', 'searcForm'],
-    Description: "Parts of php/html that are used in more than one page and
-    there is no need to make`em different."
-}
-
-Global{
-    Location: 'MeuVeterano/',
-    Files:['connect_db', 'delete_content', 'error_handling', 'global_functions',
-        'index', 'search_content', 'upload_content'],
-    Description: "The main files that act in the backend connecting to one or many of
-        the public and/or administraton pages."
-}
-
-Folder Structure: folder/subject/type/year/semester/file.extension
-
+You will need table, they are bellow, you can simply copy and paste the SQL code
 Database Tables Structure:
 contents(
 
@@ -56,7 +34,53 @@ admins(
     name VARCHAR(64) NOT NULL,
     user_key VARCHAR(64) NOT NULL
 );
---------------------------------------------------------------------------------------------------
+
+__________________________________________________________________________________________________
+Little description about the core parts
+
+Public{
+    Location: 'MeuVeterano/public',
+    Files: ['error', 'faq', 'home', 'index', 'search', 'viewContent'],
+    Description: "Pages for the target users. They can acces the main page, home where
+        they can see the most recent added content and go to the search page where
+        they are able to search for content."
+}
+
+Administraton{
+    Location: 'MeuVeterano/adm/',
+    Files: ['index', 'menage', 'upload'],
+    Description: "Pages that only administratiors have acces with an accout.
+        for now you need to create each adm manualy with sql queries
+        and paste an image into admin directory if yu want.
+        If you want to upload something  you need a admin account; If i get
+        back to this project this will no onger be required, there will be 
+        a `post` button in the home page."
+}
+
+Templates{
+    Location: 'MeuVeterano',
+    Files: ['header', 'searcForm'],
+    Description: "Parts of php/html that are used in more than one page and
+    there is no need to make them different."
+}
+
+Global{
+    Location: 'MeuVeterano/',
+    Files:['connect_db', 'delete_content', 'error_handling', 'global_functions',
+        'index', 'search_content', 'upload_content'],
+    Description: "The main files that act in the backend connecting to one or many of
+        the public and/or administraton pages."
+}
+
+Folder{
+    Location: 'MeuVeterano/',
+    Directory structure: 'folder/subject/type/year/semester/file.extension',
+    Description: "This is where the pdfs, power points and other are placed when you upload something.
+        If i get back to this project again this structure will change."
+}
+
+__________________________________________________________________________________________________
+How some of these parts work
 
 Public.Files['index'] =>
     "The public/index.php `s work is to include the page corresponding to the given url;
@@ -70,7 +94,7 @@ Public.Files['home'] =>
     After that makes a query to select the 12 most recent added content. Then renders the html 
     and draw the cards with the results from the database;
 
----------------------------------------------------------------------------------------------------
+Global---------------------------------------------------------------------------------------------
 Global.Files['index'] =>
     "Aparently the xampp server is configured to redirect to index.php files; so if
     some user tries to acces the URL MeuVeterano/ the php header function will redirect
